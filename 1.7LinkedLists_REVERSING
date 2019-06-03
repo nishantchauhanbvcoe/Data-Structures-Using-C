@@ -1,0 +1,81 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+ int data;
+ struct node *link;
+};
+void reverse(struct node **);
+void append(struct node **,int );
+void main()
+{ clrscr();
+  struct node *n,*d;
+  n=NULL; d=NULL; //d is used to get back to position of linked list after traversing
+  int i=0,a[5]={1,2,3,4,5};
+  while(i<5)
+  {
+   append(&n,a[i]);
+   i++;
+  }
+  d=n;
+  printf("Linked list before reversing:");
+  while(n!=NULL)
+  {
+   printf("%d ",(n->data));
+   n=n->link;
+  }
+  n=d;
+  reverse(&n);
+  printf("\nLinked list after reversing:");
+  while(n!=NULL)
+  {
+   printf("%d ",(n->data));
+   n=n->link;
+  }
+  free(n);
+  free(d);
+  getch();
+}
+/*To reverse a linked list*/
+void reverse(struct node **n)
+{
+ struct node *prev,*cur,*next;
+ cur=*n;
+ prev=NULL;
+ while(cur!=NULL)
+ {
+ /* next=cur->link;
+  cur->link=prev;
+  next=cur;
+  cur->link=next;*/
+  next=prev;
+  prev=cur;
+  cur=cur->link;
+  prev->link=next;
+ }
+ *n=prev;
+}
+/*any element we want to insert to linked lists will append */
+void append(struct node **a,int num)
+{
+ struct node *temp,*p;
+ if(*a==NULL)
+ {
+  temp=(struct node*)malloc(sizeof(struct node));
+  temp->data=num;
+  temp->link=NULL;
+  *a=temp;
+ }
+ else
+ {
+  temp=*a; // *a passes the address of first node
+  while(temp->link!=NULL)
+    temp=temp->link;
+
+  p=(struct node*)malloc(sizeof(struct node));
+  p->data=num;
+  p->link=NULL;
+  temp->link=p;
+ }
+}

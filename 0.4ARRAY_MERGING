@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+#define MAX1 5
+#define MAX2 6
+int* merge(int*,int*);
+void main()
+{ clrscr();
+  int i;
+  int a[5]={1,12,23,34,45};
+  int b[6]={22,33,34,44,57,67};
+  int *c;
+  c=merge(a,b);
+  int size=MAX1+MAX2;
+  for(i=0;i<size;i++)
+  {
+   printf("%d  ",c[i]);
+  }
+  free(c);
+  getch();
+}
+/* int* and int[] in lines 6 and 23 are equal */
+int* merge(int a[],int b[])
+{
+ int i,j,k;
+ int *arr;
+ int size=MAX1+MAX2;
+ arr = (int*)malloc(sizeof(int)*(size));
+ for(i=0,j=0,k=0;k<size;k++)
+ {
+  if(a[i]>b[j])
+  {
+    arr[k]=b[j];
+    j++;
+    if(j>=MAX2)
+    {
+       for(k++;i<MAX1;i++,k++)
+       {
+	 arr[k]=a[i];
+       }
+    }
+  }
+  else if(a[i]<b[j])
+  {
+    arr[k]=a[i];
+    i++;
+    if(i>=MAX1)
+    {
+       for(k++;j<MAX2;k++,j++)
+       {
+	 arr[k]=b[j];
+       }
+    }
+  }
+  else if(a[i]==b[j])
+  {
+    arr[k]=a[i];
+    k++;
+    arr[k]=a[i];
+    i++;
+    j++;
+  }
+ }
+ return arr;
+}

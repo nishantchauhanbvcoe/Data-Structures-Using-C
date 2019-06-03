@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+	int data;
+	struct node *link;
+};
+void push(struct node **,int );
+void pop(struct node **);
+void main()
+{
+  clrscr();
+  struct node *n,*m;
+  n=NULL;
+  push(&n,5);
+  push(&n,8);
+  push(&n,7);
+  push(&n,9);
+  m=n;
+  printf("Before pop: ");
+  while(n!=NULL)
+  {
+	 printf("%d ",n->data);
+	 n=n->link;
+  }
+  n=m;
+  pop(&n);
+  printf("\nAfter pop: ");
+  while(n!=NULL)
+  {
+	 printf("%d ",n->data);
+	 n=n->link;
+  }
+  getch();
+}
+void push(struct node **a,int num)
+{
+	struct node *temp;
+	temp = (struct node*)malloc(sizeof(struct node));
+	temp->data = num;
+	temp->link = *a;
+	*a = temp;
+}
+void pop(struct node **a)
+{
+	if(*a==NULL)
+	{
+	  printf("nothing to remove");
+	  return;
+	}
+	(*a)=(*a)->link;
+}

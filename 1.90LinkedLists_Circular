@@ -1,0 +1,82 @@
+//       CIRCULAR LINKED LISTS
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+ int data;
+ struct node *link;
+};
+void append(struct node **,struct node **,int );
+void Delete(struct node **,struct node **);
+void main()
+{
+  clrscr();
+  struct node *n,*m,*o,*p;
+  n=NULL; m=NULL;
+  append(&n,&m,12);
+  append(&n,&m,67);
+  append(&n,&m,45);
+  append(&n,&m,34);
+  append(&n,&m,32);
+  p=n;      o=NULL;
+  printf("Appending: ");
+  while(n!=o)
+  {
+   printf("%d ",(n->data));
+   n=n->link;
+   o=p;
+  }
+  o=NULL;
+  n=p;
+  Delete(&n,&m);
+  p=n;
+  printf("\nAfter Deleting: ");
+  while(n!=o)
+  {
+   printf("%d ",(n->data));
+   n=n->link;
+   o=p;
+  }
+  free(n); free(m);
+  getch();
+}
+/*any element we want to insert to circular linked lists will get inserted on rear */
+void append(struct node **a,struct node **b,int num)
+{
+ struct node *temp;
+ temp=(struct node *)malloc(sizeof(struct node));
+ temp->data=num;
+ if(*a==NULL)
+ {
+  *a=temp;
+ }
+ else
+ {
+  (*b)->link=temp;
+ }
+ *b=temp;
+ (*b)->link=*a;
+}
+/*any element we want to delete in a circular linked list will get deleted from front */
+void Delete(struct node **a,struct node **b)
+{
+ struct node *temp;
+ if(*a==NULL)
+ {
+  printf("empty list");
+ }
+ else
+ {
+   if(*a==*b)
+   {
+    *a=NULL;
+    *b=NULL; 
+   }
+   else
+   {
+    (*a)=(*a)->link;
+    (*b)->link=(*a);
+   }  
+ }
+}

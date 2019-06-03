@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+ int data;
+ struct node *link;
+};
+void insert(struct node *,int ,int );
+void append(struct node **,int );
+void main()
+{ clrscr();
+  struct node *n;
+  n=NULL;
+  int i=0,a[5]={1,2,3,4,5};
+  while(i<5)
+  {
+   append(&n,a[i]);
+   i++;
+  }
+  insert(n,3,787);
+  while(n!=NULL)
+  {
+   printf("%d  ",(n->data));
+   n=n->link;
+  }
+  free(n);
+  getch();
+}
+/*any element we want to insert to linked list at any position */
+void insert(struct node *a,int pos,int num)
+{
+ struct node *temp,*p;
+ int i;
+ temp=a;
+ for(i=0;i<pos;i++)
+ {
+  temp=temp->link;
+  if(temp==NULL)
+  {
+   printf("\nPosition do not exist");
+   return;
+  }
+ }
+ p=(struct node*)malloc(sizeof(struct node));
+ p->data=num;
+ p->link=temp->link;
+ temp->link=p;
+}
+/*any element we want to insert to linked lists will append */
+void append(struct node **a,int num)
+{
+ struct node *temp,*p;
+ if(*a==NULL)
+ {
+  temp=(struct node*)malloc(sizeof(struct node));
+  temp->data=num;
+  temp->link=NULL;
+  *a=temp;
+ }
+ else
+ {
+  temp=*a; // *a passes the address of first node
+  while(temp->link!=NULL)
+    temp=temp->link;
+
+  p=(struct node*)malloc(sizeof(struct node));
+  p->data=num;
+  p->link=NULL;
+  temp->link=p;
+ }
+}

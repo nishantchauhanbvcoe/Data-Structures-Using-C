@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+ int data;
+ struct node *link;
+};
+void insert(struct node **,int );
+void main()
+{ clrscr();
+  struct node *n;
+  n=NULL;
+  int i=0,a[5]={1,2,3,4,5};
+  while(i<5)
+  {
+   insert(&n,a[i]);
+   i++;
+  }
+  insert(&n,2);
+  while(n!=NULL)
+  {
+   printf("%d  ",(n->data));
+   n=n->link;
+  }
+  free(n);
+  getch();
+}
+/*any element we want to insert to linked lists will get inserted but in ascending order */
+void insert(struct node **a,int num)
+{
+ struct node *temp=*a,*p;
+ p=(struct node*)malloc(sizeof(struct node));
+ p->data=num;
+ if(*a==NULL||((*a)->data)>num)
+ {
+  *a=p;
+  (*a)->link=temp;
+ }
+ else
+ {
+  while(temp!=NULL)
+  {
+   if(temp->data<=num&&(temp->link==NULL||temp->link->data>num))
+    {
+     p->link=temp->link;
+     temp->link=p;
+     p->data=num;
+     return;
+    }
+    temp=temp->link;
+  }
+ }
+}

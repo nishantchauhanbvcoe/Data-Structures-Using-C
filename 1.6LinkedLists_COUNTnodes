@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+ int data;
+ struct node *link;
+};
+int count(struct node *);
+/*To  count no. of nodes*/
+void append(struct node **,int );
+void main()
+{ clrscr();
+  struct node *n;
+  n=NULL;
+  int i=0,a[5]={1,2,3,4,5};
+  while(i<5)
+  {
+   append(&n,a[i]);
+   i++;
+  }
+  int c = count(n);
+  printf("\nNo. of nodes = %d\n",c);
+  while(n!=NULL)
+  {
+   printf("%d ",(n->data));
+   n=n->link;
+  }
+  free(n);
+  getch();
+}
+int count(struct node *a)
+{
+ int i=0;
+ while(a!=NULL)
+ {
+  a=a->link;
+  i++;
+ }
+ return i;
+}
+/*any element we want to insert to linked lists will append */
+void append(struct node **a,int num)
+{
+ struct node *temp,*p;
+ if(*a==NULL)
+ {
+  temp=(struct node*)malloc(sizeof(struct node));
+  temp->data=num;
+  temp->link=NULL;
+  *a=temp;
+ }
+ else
+ {
+  temp=*a; // *a passes the address of first node
+  while(temp->link!=NULL)
+    temp=temp->link;
+
+  p=(struct node*)malloc(sizeof(struct node));
+  p->data=num;
+  p->link=NULL;
+  temp->link=p;
+ }
+}

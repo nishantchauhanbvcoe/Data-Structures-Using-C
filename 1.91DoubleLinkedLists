@@ -1,0 +1,99 @@
+/*
+		      Double Linked Lists
+*/
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct node
+{
+ struct node *pre;
+ int data;
+ struct node *nex;
+};
+void append(struct node **,int);
+void Delete(struct node **,int);
+void main()
+{
+  clrscr();
+  struct node *n,*q;
+  n=NULL; int i=0;
+  int a[5]={2,5,4,6,1};
+  while(i<5)
+  {
+  append(&n,a[i]);
+  i++;
+  }
+  q=n;
+  printf("Before Deleting :  ");
+  while(n!=NULL)
+  {
+   printf("%d ",(n->data));
+   n=n->nex;
+  }
+  n=q;
+  Delete(&n,6);
+  printf("\nAfter deleting :  ");
+  while(n!=NULL)
+  {
+   printf("%d ",(n->data));
+   n=n->nex;
+  }
+  free(n);
+  getch();
+}
+/*any element we want to insert to double linked lists will append */
+void append(struct node **a,int num)
+{
+ struct node *temp,*p;
+ if(*a==NULL)
+ {
+  temp=(struct node*)malloc(sizeof(struct node));
+  temp->pre=NULL;
+  temp->data=num;
+  temp->nex=NULL;
+  *a=temp;
+ }
+ else
+ {
+  temp=*a; // *a passes the address of first node
+  while(temp->nex!=NULL)
+    temp=temp->nex;
+
+  p=(struct node*)malloc(sizeof(struct node));
+  p->pre=temp;
+  p->data=num;
+  p->nex=NULL;
+  temp->nex=p;
+ }
+}
+void Delete(struct node **a,int num)
+{
+ struct node *temp;
+ temp=*a;
+ while(temp->nex!=NULL)
+ {
+  if(temp->data==num)
+  {
+   if(temp==*a) //for first node
+   {
+    (*a)=(*a)->nex;
+    (*a)->pre=NULL;
+   }
+   else //for any other node
+   {
+    if(temp->nex==NULL) //for last node
+    {
+     temp->pre->nex=NULL; //list ends at previous node
+    }
+    else //for any node in between
+    {
+     temp->pre->nex=temp->nex;
+     temp->nex->pre=temp->pre;
+    }
+   }
+   return;
+  }
+  temp=temp->nex;
+ }
+ printf(".!..");
+}
